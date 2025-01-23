@@ -1,0 +1,31 @@
+#!/bin/bash
+### App file generated with YoloGen, the YunoHost app generator, version .
+
+source ../settings/scripts/_common.sh
+source /usr/share/yunohost/helpers
+
+#=================================================
+# RESTORE SYSTEM CONFIGURATIONS
+#=================================================
+ynh_script_progression "Restoring system configurations related to $app..."
+
+ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
+
+#=================================================
+# RESTORE VARIOUS FILES
+#=================================================
+
+ynh_restore "/var/log/$app/"
+
+#=================================================
+# RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
+#=================================================
+ynh_script_progression "Reloading NGINX web server and $app's service..."
+
+ynh_systemctl --service=nginx --action=reload
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Restoration completed for $app"

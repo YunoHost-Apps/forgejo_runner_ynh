@@ -1,0 +1,63 @@
+#!/bin/bash
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+#=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression "Installing dependencies..."
+
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression "Setting up source files..."
+
+ynh_setup_source --dest_dir="$install_dir"
+
+chown -R $app:www-data "$install_dir"
+
+#=================================================
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression "Adding app's configuration file..."
+
+# ynh_config_add --template="" --destination="$install_dir/"
+
+chmod 400 "$install_dir/"
+chown "$app:$app" "$install_dir/"
+
+#=================================================
+# INSTALL APP
+#=================================================
+ynh_script_progression "Installing $app..."
+
+pushd "$install_dir"
+echo "$forge_url
+$registration_token
+$runner_name
+$runner_labels
+" | ./forgejo-runner register
+popd
+
+#=================================================
+# SYSTEM CONFIGURATION
+#=================================================
+ynh_script_progression "Adding system configurations related to $app..."
+
+ynh_config_add_systemd
+
+ynh_config_add_logrotate
+
+#=================================================
+# FINALIZE APP INSTALL WITH CURL
+#=================================================
+ynh_script_progression "Finalizing installation..."
+
+ynh_systemctl --service="$app" --action="start"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression "Installation of $app completed"

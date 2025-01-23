@@ -1,0 +1,31 @@
+#!/bin/bash
+#### App file generated with YoloGen, the YunoHost app generator, version .
+
+source ../settings/scripts/_common.sh
+source /usr/share/yunohost/helpers
+
+ynh_print_info "Declaring files to be backed up..."
+
+#=================================================
+# BACKUP THE APP MAIN DIR
+#=================================================
+
+ynh_backup "$install_dir"
+
+#=================================================
+# SYSTEM CONFIGURATION
+#=================================================
+
+ynh_backup --src_path="/etc/systemd/system/$app.service"
+
+#=================================================
+# BACKUP VARIOUS FILES
+#=================================================
+
+ynh_backup "/var/log/$app/"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_print_info "Backup script completed for $app. (YunoHost will then actually copy those files to the archive)."

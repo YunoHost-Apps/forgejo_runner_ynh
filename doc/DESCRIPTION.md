@@ -1,1 +1,1 @@
-This is a dummy description of this app features
+CI Runner for the Git forge Forgejo

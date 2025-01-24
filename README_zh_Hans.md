@@ -18,7 +18,7 @@
 
 ## 概况
 
-This is a dummy description of this app features
+CI Runner for the Git forge Forgejo
 
 **分发版本：** 6.2.0~ynh1
 

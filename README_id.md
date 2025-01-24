@@ -18,7 +18,7 @@ Ini TIDAK boleh diedit dengan tangan.
 
 ## Ringkasan
 
-This is a dummy description of this app features
+CI Runner for the Git forge Forgejo
 
 **Versi terkirim:** 6.2.0~ynh1
 

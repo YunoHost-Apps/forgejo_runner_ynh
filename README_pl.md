@@ -18,7 +18,7 @@ Nie powinno być ono edytowane ręcznie.
 
 ## Przegląd
 
-This is a dummy description of this app features
+CI Runner for the Git forge Forgejo
 
 **Dostarczona wersja:** 6.2.0~ynh1
 

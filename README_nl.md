@@ -18,7 +18,7 @@ Hij mag NIET handmatig aangepast worden.
 
 ## Overzicht
 
-This is a dummy description of this app features
+CI Runner for the Git forge Forgejo
 
 **Geleverde versie:** 6.2.0~ynh1
 

@@ -20,7 +20,7 @@ EZ editatu eskuz.
 
 CI Runner for the Git forge Forgejo
 
-**Paketatutako bertsioa:** 6.2.0~ynh1
+**Paketatutako bertsioa:** 6.2.1~ynh1
 
 **Demoa:** <https://code.forgejo.org>
 ## Dokumentazioa eta baliabideak

@@ -18,9 +18,9 @@ Nie powinno być ono edytowane ręcznie.
 
 ## Przegląd
 
-This is a dummy description of this app features
+CI Runner for the Git forge Forgejo
 
-**Dostarczona wersja:** 6.2.0~ynh1
+**Dostarczona wersja:** 6.2.1~ynh1
 
 **Demo:** <https://code.forgejo.org>
 ## Dokumentacja i zasoby

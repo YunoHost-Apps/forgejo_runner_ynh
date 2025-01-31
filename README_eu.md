@@ -18,9 +18,9 @@ EZ editatu eskuz.
 
 ## Aurreikuspena
 
-This is a dummy description of this app features
+CI Runner for the Git forge Forgejo
 
-**Paketatutako bertsioa:** 6.2.0~ynh1
+**Paketatutako bertsioa:** 6.2.1~ynh1
 
 **Demoa:** <https://code.forgejo.org>
 ## Dokumentazioa eta baliabideak

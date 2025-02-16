@@ -70,4 +70,17 @@ ram.runtime = "50M"
     autoupdate.asset.amd64 = "^forgejo-runner-.*-linux-amd64$"
     autoupdate.asset.arm64 = "^forgejo-runner-.*-linux-arm64$"
 
+    [resources.system_user]
+
     [resources.install_dir]
+
+    [resources.apt]
+    packages = [
+        "ca-certificates",
+        "git",
+        "curl",
+        "tar",
+    ]
+    extras.docker.repo = "https://download.docker.com/linux/debian bullseye stable"
+    extras.docker.key = "https://download.docker.com/linux/debian/gpg"
+    extras.docker.packages = "docker-ce, docker-ce-cli, containerd.io"

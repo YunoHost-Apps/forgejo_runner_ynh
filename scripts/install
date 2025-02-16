@@ -14,18 +14,16 @@ ynh_script_progression "Installing dependencies..."
 ynh_script_progression "Setting up source files..."
 
 ynh_setup_source --dest_dir="$install_dir"
-
-chown -R $app:www-data "$install_dir"
+chmod u+x "$install_dir/forgejo-runner"
 
 #=================================================
-# ADD A CONFIGURATION
+# SETUP GROUPS
 #=================================================
-ynh_script_progression "Adding app's configuration file..."
-
-# ynh_config_add --template="" --destination="$install_dir/"
-
-chmod 400 "$install_dir/"
-chown "$app:$app" "$install_dir/"
+ynh_script_progression "Adding groups to user..."
+#user needs access to yunohost ssl certs if no
+usermod -a -G ssl-cert "$app"
+#user need to access docker daemon
+usermod -a -G docker "$app"
 
 #=================================================
 # INSTALL APP
@@ -33,11 +31,9 @@ chown "$app:$app" "$install_dir/"
 ynh_script_progression "Installing $app..."
 
 pushd "$install_dir"
-echo "$forge_url
-$registration_token
-$runner_name
-$runner_labels
-" | ./forgejo-runner register
+
+sudo -u $app ./forgejo-runner register --no-interactive --instance $forge_url --labels $runner_labels --name $runner_name --token $registration_token
+
 popd
 
 #=================================================
@@ -46,6 +42,8 @@ popd
 ynh_script_progression "Adding system configurations related to $app..."
 
 ynh_config_add_systemd
+
+yunohost service add "$app" --description="A short description of the app" --log="/var/log/$app/$app.log"
 
 ynh_config_add_logrotate
 

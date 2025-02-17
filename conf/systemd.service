@@ -8,7 +8,7 @@ Restart=always
 User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
-ExecStart=__INSTALL_DIR__/forgejo web -p __PORT__
+ExecStart=__INSTALL_DIR__/forgejo-runner daemon
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 

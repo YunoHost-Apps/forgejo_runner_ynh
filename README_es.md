@@ -20,6 +20,7 @@ No se debe editar a mano.
 
 CI Runner for the Git forge Forgejo
 
+
 **Versión actual:** 6.3.1~ynh1
 
 **Demo:** <https://code.forgejo.org>

@@ -20,6 +20,7 @@
 
 CI Runner for the Git forge Forgejo
 
+
 **Поставляемая версия:** 6.3.1~ynh1
 
 **Демо-версия:** <https://code.forgejo.org>

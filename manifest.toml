@@ -4,7 +4,6 @@ packaging_format = 2
 
 id = "forgejo_runner"
 name = "Forgejo Runner"
-
 description.en = "CI Runner for the Git forge Forgejo"
 description.fr = "Exécuteur CI pour la forge Git Forgejo"
 
@@ -27,6 +26,7 @@ architectures = ["amd64", "arm64"]
 multi_instance = false
 
 ldap = "not_relevant"
+
 sso = false
 
 disk = "50M"
@@ -70,4 +70,8 @@ ram.runtime = "50M"
     autoupdate.asset.amd64 = "^forgejo-runner-.*-linux-amd64$"
     autoupdate.asset.arm64 = "^forgejo-runner-.*-linux-arm64$"
 
+    [resources.system_user]
+
     [resources.install_dir]
+
+    [resources.ports]

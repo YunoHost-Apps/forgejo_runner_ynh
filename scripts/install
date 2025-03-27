@@ -1,31 +1,34 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
-
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression "Installing dependencies..."
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Setting up source files..."
 
+# Download, check integrity, uncompress and patch the source from manifest.toml
 ynh_setup_source --dest_dir="$install_dir"
 
-chown -R $app:www-data "$install_dir"
+chmod +x "$install_dir/forgejo-runner"
+chown -R "$app:www-data" "$install_dir"
 
 #=================================================
-# ADD A CONFIGURATION
+# SYSTEM CONFIGURATION
 #=================================================
-ynh_script_progression "Adding app's configuration file..."
+ynh_script_progression "Adding system configurations related to $app..."
 
-# ynh_config_add --template="" --destination="$install_dir/"
+# Create a dedicated systemd config
+ynh_config_add_systemd
+yunohost service add "$app" --description="Forgejo Runner" --log="/var/log/$app/$app.log"
 
-chmod 400 "$install_dir/"
-chown "$app:$app" "$install_dir/"
+# Use logrotate to manage application logfile(s)
+ynh_config_add_logrotate
 
 #=================================================
 # INSTALL APP
@@ -33,28 +36,20 @@ chown "$app:$app" "$install_dir/"
 ynh_script_progression "Installing $app..."
 
 pushd "$install_dir"
-echo "$forge_url
-$registration_token
-$runner_name
-$runner_labels
-" | ./forgejo-runner register
+	echo "$forge_url
+	$registration_token
+	$runner_name
+	$runner_labels
+	" | ynh_hide_warnings ynh_exec_as_app "$install_dir/forgejo-runner" register
 popd
 
 #=================================================
-# SYSTEM CONFIGURATION
+# START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression "Adding system configurations related to $app..."
+ynh_script_progression "Starting $app's systemd service..."
 
-ynh_config_add_systemd
-
-ynh_config_add_logrotate
-
-#=================================================
-# FINALIZE APP INSTALL WITH CURL
-#=================================================
-ynh_script_progression "Finalizing installation..."
-
-ynh_systemctl --service="$app" --action="start"
+# Start a systemd service
+ynh_systemctl --service="$app" --action="start" --wait_until="launched" --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # END OF SCRIPT

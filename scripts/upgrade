@@ -1,33 +1,54 @@
 #!/bin/bash
-### App file generated with YoloGen, the YunoHost app generator, version .
+
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
 
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# ENSURE DOWNWARD COMPATIBILITY
+# STOP SYSTEMD SERVICE
 #=================================================
+ynh_script_progression "Stopping $app's systemd service..."
+
+ynh_systemctl --service="$app" --action="stop"
 
 #=================================================
-# INSTALL DEPENDENCIES
+# ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_script_progression "Installing dependencies..."
+ynh_script_progression "Ensuring downward compatibility..."
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Upgrading source files..."
+ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=""
+# Download, check integrity, uncompress and patch the source from manifest.toml
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".runner .cache/"
 
-chown -R $app:www-data "$install_dir"
+chmod +x "$install_dir/forgejo-runner"
+chown -R "$app:www-data" "$install_dir"
 
 #=================================================
-# REAPPLY SYSTEM CONFIGURATIONS
+# REAPPLY SYSTEM CONFIGURATION
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
 
-ynh_config_add_nginx
+# Create a dedicated systemd config
+ynh_config_add_systemd
+yunohost service add "$app" --description="Forgejo Runner" --log="/var/log/$app/$app.log"
+
+# Use logrotate to manage application logfile(s)
+ynh_config_add_logrotate
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+# Start a systemd service
+ynh_systemctl --service="$app" --action="start" --wait_until="launched" --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # END OF SCRIPT

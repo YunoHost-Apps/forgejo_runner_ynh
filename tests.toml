@@ -8,7 +8,20 @@ test_format = 1.0
     # Tests to run
     # ------------
 
-    args.forge_url = "https://code.forgejo.org"
+    preinstall = """
+    sudo yunohost tools update apps
+    sudo yunohost app install forgejo --force --args "domain=domain.tld&path=/&init_main_permission=visitors&init_admin_permission=admins"
+    """
+
+    # -------------------------------
+    # Default args to use for install
+    # -------------------------------
+
+    args.forge_url = "https://domain.tld/"
     args.registration_token = "123456"
     args.runner_name = "forge_runner"
     args.runner_labels = "runner"
+
+    # -------------------------------
+    # Commits to test upgrade from
+    # -------------------------------

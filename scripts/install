@@ -1,60 +1,64 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
-
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression "Installing dependencies..."
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Setting up source files..."
 
+# Download, check integrity, uncompress and patch the source from manifest.toml
 ynh_setup_source --dest_dir="$install_dir"
 
-chown -R $app:www-data "$install_dir"
-
-#=================================================
-# ADD A CONFIGURATION
-#=================================================
-ynh_script_progression "Adding app's configuration file..."
-
-# ynh_config_add --template="" --destination="$install_dir/"
-
-chmod 400 "$install_dir/"
-chown "$app:$app" "$install_dir/"
-
-#=================================================
-# INSTALL APP
-#=================================================
-ynh_script_progression "Installing $app..."
-
-pushd "$install_dir"
-echo "$forge_url
-$registration_token
-$runner_name
-$runner_labels
-" | ./forgejo-runner register
-popd
+chmod +x "$install_dir/forgejo-runner"
+chown -R "$app:www-data" "$install_dir"
 
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================
 ynh_script_progression "Adding system configurations related to $app..."
 
+# Create a dedicated systemd config
 ynh_config_add_systemd
+yunohost service add "$app" --description="Forgejo Runner" --log="/var/log/$app/$app.log"
 
+# Use logrotate to manage application logfile(s)
 ynh_config_add_logrotate
 
 #=================================================
-# FINALIZE APP INSTALL WITH CURL
+# INSTALL APP
 #=================================================
-ynh_script_progression "Finalizing installation..."
+ynh_script_progression "Installing $app..."
 
-ynh_systemctl --service="$app" --action="start"
+if [ ${PACKAGE_CHECK_EXEC:-0} -eq 1 ]; then
+	registration_token=$(ynh_string_random --length=40 --filter="0-9a-f")
+	sudo -u forgejo env PATH="$PATH" /var/www/forgejo/forgejo forgejo-cli actions register --secret $registration_token
+	forge_url="http://127.0.0.1:$(ynh_app_setting_get --app="forgejo" --key="port")/"
+	pushd "$install_dir"
+		ynh_hide_warnings ynh_exec_as_app "$install_dir/forgejo-runner" create-runner-file --connect --instance $forge_url --secret $registration_token --name $runner_name
+	popd
+else
+	pushd "$install_dir"
+		echo "$forge_url
+		$registration_token
+		$runner_name
+		$runner_labels
+		" | ynh_hide_warnings ynh_exec_as_app "$install_dir/forgejo-runner" register
+	popd
+fi
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
+# Start a systemd service
+ynh_systemctl --service="$app" --action="start" --wait_until="launched" --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # END OF SCRIPT

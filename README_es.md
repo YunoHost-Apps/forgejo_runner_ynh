@@ -3,7 +3,7 @@ Este archivo README esta generado automaticamente<https://github.com/YunoHost/ap
 No se debe editar a mano.
 -->
 
-# Forgejo Runner para Yunohost
+# Forgejo Runner para YunoHost
 
 [![Nivel de integración](https://apps.yunohost.org/badge/integration/forgejo_runner)](https://ci-apps.yunohost.org/ci/apps/forgejo_runner/)
 ![Estado funcional](https://apps.yunohost.org/badge/state/forgejo_runner)
@@ -20,7 +20,8 @@ No se debe editar a mano.
 
 CI Runner for the Git forge Forgejo
 
-**Versión actual:** 6.2.1~ynh1
+
+**Versión actual:** 6.3.1~ynh1
 
 **Demo:** <https://code.forgejo.org>
 ## Documentaciones y recursos

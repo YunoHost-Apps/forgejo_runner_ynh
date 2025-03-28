@@ -25,7 +25,7 @@ ynh_script_progression "Ensuring downward compatibility..."
 ynh_script_progression "Upgrading source files..."
 
 # Download, check integrity, uncompress and patch the source from manifest.toml
-ynh_setup_source --dest_dir="$install_dir" --full_replace
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".runner .cache/"
 
 chmod +x "$install_dir/forgejo-runner"
 chown -R "$app:www-data" "$install_dir"

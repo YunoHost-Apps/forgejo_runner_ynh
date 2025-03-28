@@ -20,7 +20,8 @@ EZ editatu eskuz.
 
 CI Runner for the Git forge Forgejo
 
-**Paketatutako bertsioa:** 6.2.1~ynh1
+
+**Paketatutako bertsioa:** 6.3.1~ynh1
 
 **Demoa:** <https://code.forgejo.org>
 ## Dokumentazioa eta baliabideak
@@ -36,7 +37,7 @@ CI Runner for the Git forge Forgejo
 
 Bidali `pull request`a [`testing` abarrera](https://github.com/YunoHost-Apps/forgejo_runner_ynh/tree/testing).
 
-`testing` abarra probatzeko, ondorengoa egin:
+`testing` abarra probatzeko, honakoa egin:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/forgejo_runner_ynh/tree/testing --debug

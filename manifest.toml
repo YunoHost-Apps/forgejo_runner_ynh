@@ -7,7 +7,7 @@ name = "Forgejo Runner"
 description.en = "CI Runner for the Git forge Forgejo"
 description.fr = "Exécuteur CI pour la forge Git Forgejo"
 
-version = "6.3.1~ynh1"
+version = "9.0.3~ynh1"
 
 maintainers = ["salamandar"]
 
@@ -60,10 +60,10 @@ ram.runtime = "50M"
     [resources.sources]
 
     [resources.sources.main]
-    amd64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v6.3.1/forgejo-runner-6.3.1-linux-amd64"
-    amd64.sha256 = "fb27a4c722210044030aaf09211eb7fc5d5c497a238be00e032b2f5ffa6da6c0"
-    arm64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v6.3.1/forgejo-runner-6.3.1-linux-arm64"
-    arm64.sha256 = "59ce4fae5e656b03fe5274ea32c605b9137e4f62cb3084b4192d87c184f22ac2"
+    amd64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v9.0.3/forgejo-runner-9.0.3-linux-amd64"
+    amd64.sha256 = "b14c6c4b53d94241e814a91b377265751d04f09e47ea163dae376b7fc2862116"
+    arm64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v9.0.3/forgejo-runner-9.0.3-linux-arm64"
+    arm64.sha256 = "5179daf0501ce82d48af9acaa024cf8cd1a15913ff0dbb41c0ac7465b5e84fd9"
     rename = "forgejo-runner"
 
     autoupdate.strategy = "latest_forgejo_release"

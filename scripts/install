@@ -37,9 +37,9 @@ ynh_script_progression "Installing $app..."
 
 if [ ${PACKAGE_CHECK_EXEC:-0} -eq 1 ]; then
 	registration_token=$(ynh_string_random --length=40 --filter="0-9a-f")
-	sudo -u forgejo env PATH="$PATH" /var/www/forgejo/forgejo cert
-	sudo -u forgejo env PATH="$PATH" /var/www/forgejo/forgejo forgejo-cli actions register --secret $registration_token
 	forge_url="$forge_url"
+	sudo -u forgejo env PATH="$PATH" /var/www/forgejo/forgejo cert "$forge_url"
+	sudo -u forgejo env PATH="$PATH" /var/www/forgejo/forgejo forgejo-cli actions register --secret $registration_token
 	pushd "$install_dir"
 		ynh_hide_warnings ynh_exec_as_app "$install_dir/forgejo-runner" create-runner-file --connect --instance $forge_url --secret $registration_token --name $runner_name
 	popd

@@ -4,7 +4,6 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -25,6 +24,7 @@ ynh_script_progression "Adding system configurations related to $app..."
 
 # Create a dedicated systemd config
 ynh_config_add_systemd
+
 yunohost service add "$app" --description="Forgejo Runner" --log="/var/log/$app/$app.log"
 
 # Use logrotate to manage application logfile(s)

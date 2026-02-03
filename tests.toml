@@ -11,6 +11,7 @@ test_format = 1.0
     preinstall = """
     sudo yunohost tools update apps
     sudo yunohost app install forgejo --force --args "domain=domain.tld&path=/&init_main_permission=visitors&init_admin_permission=admins"
+    sudo yunohost app config set forgejo main.actions.actions_enabled -v true
     """
 
     # -------------------------------

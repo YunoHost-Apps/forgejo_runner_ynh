@@ -69,6 +69,7 @@ fi
 
 pushd "$install_dir"
     ynh_script_progression "test 6"
+    ynh_script_progression "forge_url = $forge_url , runner_name = $runner_name , runner_labels = $runner_labels , registration_token = $registration_token "
     ynh_hide_warnings ynh_exec_as_app "$install_dir/forgejo-runner" register \
         --config "$install_dir/config.yml" \
         --no-interactive \

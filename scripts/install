@@ -47,9 +47,8 @@ if [ "${PACKAGE_CHECK_EXEC:-0}" -eq 1 ]; then
     # ynh_app_setting_set --key="forge_url" --value="$url"
 
     export insecure=true
-fi
 
-if [ "$local_forge" -eq 1 ]; then
+elif [ "$local_forge" -eq 1 ]; then
     # Ask local Forgejo to generate a registration token
     registration_token=$(sudo -u $forgejo_app /var/www/$forgejo_app/forgejo actions generate-runner-token)
     ynh_app_setting_set --key="registration_token" --value="$registration_token"

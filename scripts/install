@@ -35,7 +35,6 @@ ynh_config_add_logrotate
 #=================================================
 ynh_script_progression "Installing $app..."
 
-ynh_config_add --jinja --template="config.yml" --destination="$install_dir/config.yml"
 ynh_script_progression "forge_url = $forge_url , runner_name = $runner_name , runner_labels = $runner_labels , registration_token = $registration_token "
 
 if [ "${PACKAGE_CHECK_EXEC:-0}" -eq 1 ]; then
@@ -71,8 +70,9 @@ elif [ "$local_forge" -eq 1 ]; then
     ynh_script_progression "forge_url = $forge_url , runner_name = $runner_name , runner_labels = $runner_labels , registration_token = $registration_token "
 fi
 
-    ynh_script_progression "test 5"
-    ynh_script_progression "forge_url = $forge_url , runner_name = $runner_name , runner_labels = $runner_labels , registration_token = $registration_token "
+ynh_script_progression "test 5"
+ynh_script_progression "forge_url = $forge_url , runner_name = $runner_name , runner_labels = $runner_labels , registration_token = $registration_token "
+ynh_config_add --jinja --template="config.yml" --destination="$install_dir/config.yml"
 
 pushd "$install_dir"
     ynh_script_progression "test 6"

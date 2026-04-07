@@ -19,7 +19,6 @@ test_format = 1.0
     # -------------------------------
 
     args.forge_url = "https://domain.tld/"
-    args.registration_token = "7c31591e8b67225a116d4a4519ea8e507e08f71f"
     args.runner_name = "forge_runner"
     args.runner_labels = "self-hosted:host"
 

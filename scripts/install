@@ -40,11 +40,26 @@ if [ "${PACKAGE_CHECK_EXEC:-0}" -eq 1 ]; then
     registration_token=$(sudo -u forgejo /var/www/forgejo/forgejo actions generate-runner-token)
     ynh_app_setting_set --key="registration_token" --value="$registration_token"
 
-    # Communication should be local to prevent ssl issues
-    # url="http://127.0.0.1:$(ynh_app_setting_get --app="forgejo" --key="port")/"
-    # ynh_app_setting_set --key="forge_url" --value="$url"
+    runner_name="ynh_local_runner"
+    ynh_app_setting_set --key="runner_name" --value="$runner_name"
+
+    url=$(ynh_app_setting_get --app="$forgejo_app" --key="domain")
+    forge_url="https://$url"
+    ynh_app_setting_set --key="forge_url" --value="$forge_url"
 
     export insecure=true
+
+elif [ "$local_forge" -eq 1 ]; then
+    # Ask local Forgejo to generate a registration token
+    registration_token=$(sudo -u $forgejo_app /var/www/$forgejo_app/forgejo actions generate-runner-token)
+    ynh_app_setting_set --key="registration_token" --value="$registration_token"
+
+    runner_name="ynh_local_runner"
+    ynh_app_setting_set --key="runner_name" --value="$runner_name"
+
+    url=$(ynh_app_setting_get --app="$forgejo_app" --key="domain")
+    forge_url="https://$url"
+    ynh_app_setting_set --key="forge_url" --value="$forge_url"
 fi
 
 ynh_config_add --jinja --template="config.yml" --destination="$install_dir/config.yml"

@@ -7,7 +7,7 @@ name = "Forgejo Runner"
 description.en = "CI Runner for the Git forge Forgejo"
 description.fr = "Exécuteur CI pour la forge Git Forgejo"
 
-version = "13.2.1~ynh1"
+version = "13.2.2~ynh1"
 
 maintainers = ["salamandar"]
 
@@ -80,10 +80,10 @@ ram.runtime = "50M"
     [resources.sources]
 
     [resources.sources.main]
-    amd64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v13.2.1/forgejo-runner-13.2.1-linux-amd64"
-    amd64.sha256 = "bb369fe1ecb50fdc983c0b1d993f19b0920df6e5864511892b3cdbf16d858b34"
-    arm64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v13.2.1/forgejo-runner-13.2.1-linux-arm64"
-    arm64.sha256 = "eeddb7902f79abe488972f4189fbe3ea02762ee827d1b406b469420bf0d62dd9"
+    amd64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v13.2.2/forgejo-runner-13.2.2-linux-amd64"
+    amd64.sha256 = "6b077ccadc22036ba049cea39b09cfbdc5e5ad6000a38f90c83a19e4fb815543"
+    arm64.url = "https://code.forgejo.org/forgejo/runner/releases/download/v13.2.2/forgejo-runner-13.2.2-linux-arm64"
+    arm64.sha256 = "9122a9f0ce9cc247eeaf11c15b76cb9171c4339fa8c7592180c9f6ba87e453bb"
     rename = "forgejo-runner"
 
     autoupdate.strategy = "latest_forgejo_release"
